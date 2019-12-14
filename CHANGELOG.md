@@ -1,5 +1,26 @@
-### unreleased
-* Remove dependency on unittest2, use unittest instead (#113)
+### 3.5.0 - 2019-12-03
+
+  Drop support for Python 2 and Python < 3.5. See [here for more info](./DROP_PYTHON_EOL_SUPPORT.md).
+
+### 3.4.9 - 2019-12-03
+
+* This version is the last `quandl` version to support Python 2 or < 3.5. All future `quandl` package releases will only support Python >= 3.5.
+
+  If you're still using Python 2 or < 3.5, you'll need to stay at this version. 
+
+  If you're using Python >= 3.5, its recommended you perform a `pip install --upgrade quandl` to grab the newest
+  version.
+
+### 3.4.8 - 2019-05-03
+
+* Add config to verify SSL certs. Verification on by default. (#135)
+
+### 3.4.6 - 2019-02-07
+
+* Fix typo in invalid database code message (#128)
+* Use six.moves instead of try/catch on imports (#129)
+* Add classifiers metadata to setup.py (#132)
+* Update how we find local api key file (#131)
 
 ### 3.4.5 - 2018-11-21
 
@@ -12,6 +33,8 @@
 ### 3.4.3 - 2018-10-19
 
 * Allow for exporting of datatables https://github.com/quandl/quandl-python/pull/120
+* Add support to save/read api key from file (#117)
+* Remove dependency on unittest2, use unittest instead (#113)
 
 ### 3.4.2 - 2018-08-21
 

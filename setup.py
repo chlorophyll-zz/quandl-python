@@ -1,13 +1,26 @@
 import os
 import sys
 
+if sys.version_info[:2] < (3, 5):
+    raise ImportError("""
+    This version of quandl no longer supports python versions less than 3.5.0. If you're
+    reading this message your pip and/or setuptools are outdated. Please run the following to
+    update them:
+
+    pip install pip setuptools --upgrade
+
+    Then try to reinstall quandl:
+
+    pip install quandl
+    """)
+
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
 with open('LONG_DESCRIPTION.rst') as f:
-    long_description = f.read()
+    LONG_DESCRIPTION = f.read()
 
 # Don't import quandl module here, since deps may not be installed
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'quandl'))
@@ -15,26 +28,27 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'quandl'))
 # ignore flake8 warning that requires imports to be at the top
 from version import VERSION  # NOQA
 
-install_requires = [
+INSTALL_REQUIRES = [
     'pandas >= 0.14',
     'numpy >= 1.8',
     'requests >= 2.7.0',
     'inflection >= 0.3.1',
     'python-dateutil',
     'six',
-    'more-itertools <= 5.0.0'
+    'more-itertools'
 ]
 
-installs_for_two = [
-    'pyOpenSSL',
-    'ndg-httpsclient',
-    'pyasn1'
+TEST_REQUIRES = [
+        'flake8',
+        'nose',
+        'httpretty',
+        'mock',
+        'factory_boy',
+        'jsondate',
+        'parameterized'
 ]
 
-if sys.version_info[0] < 3:
-    install_requires += installs_for_two
-
-packages = [
+PACKAGES = [
     'quandl',
     'quandl.errors',
     'quandl.model',
@@ -46,7 +60,7 @@ setup(
     name='Quandl',
     description='Package for quandl API access',
     keywords=['quandl', 'API', 'data', 'financial', 'economic'],
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     version=VERSION,
     author='Quandl',
     author_email='connect@quandl.com',
@@ -58,19 +72,14 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8"
     ],
-    install_requires=install_requires,
-    tests_require=[
-        'flake8',
-        'nose <= 1.3.7',
-        'httpretty',
-        'mock',
-        'factory_boy',
-        'jsondate',
-        'parameterized'
-    ],
+    install_requires=INSTALL_REQUIRES,
+    tests_require=TEST_REQUIRES,
+    python_requires='>= 3.5',
     test_suite="nose.collector",
-    packages=packages
+    packages=PACKAGES
 )
